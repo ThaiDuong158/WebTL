@@ -1,20 +1,24 @@
 <!DOCTYPE html>
     <html lang="vi">
+    <?php
+    session_start();
+    ?>
     
     <head>
         <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="../asset/css/style.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-                integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-                crossorigin="anonymous" referrerpolicy="no-referrer" />
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.0/svg.min.js"
-                integrity="sha512-EmfT33UCuNEdtd9zuhgQClh7gidfPpkp93WO8GEfAP3cLD++UM1AG9jsTUitCI9DH5nF72XaFePME92r767dHA=="
-                crossorigin="anonymous" referrerpolicy="no-referrer">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../asset/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.0/svg.min.js"
+            integrity="sha512-EmfT33UCuNEdtd9zuhgQClh7gidfPpkp93WO8GEfAP3cLD++UM1AG9jsTUitCI9DH5nF72XaFePME92r767dHA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
             </script>
         ?>
         <title>Document</title>
     </head>
+    
     <body class="page-home">
         <div id="app">
             <?php
@@ -38,136 +42,135 @@
                     }
                     $id = 1;
                     $sql = "SELECT 
-                                truyen.*, 
-                                tenTheLoai, 
-                                COUNT(chuongtruyen.idTruyen) AS SoChuong, 
-                                tinh_trang.tinhTrang,
-                                AVG(danhgia.diemDanhGia) AS DiemDanhGiaTrungBinh, 
-                                COUNT(DISTINCT danhgia.idDanhGia) AS LuotDanhGia
-                            FROM 
-                                truyen 
-                                INNER JOIN truyen_theloai ON truyen.idTruyen = truyen_theloai.idTruyen 
-                                INNER JOIN theloai ON theloai.idTheLoai = truyen_theloai.idTheLoai 
-                                LEFT JOIN chuongtruyen ON truyen.idTruyen = chuongtruyen.idTruyen 
-                                LEFT JOIN tinh_trang ON truyen.idTinhTrang = tinh_trang.idTinhTrang 
-                                LEFT JOIN danhgia ON truyen.idTruyen = danhgia.idTruyen 
-                            WHERE 
-                                truyen.idTruyen = $id
-                            GROUP BY 
-                                truyen.idTruyen, truyen.tenTruyen, theloai.tenTheLoai, tinh_trang.tinhTrang";
+                                    truyen.*, 
+                                    tenTheLoai, 
+                                    COUNT(chuongtruyen.idTruyen) AS SoChuong, 
+                                    tinh_trang.tinhTrang,
+                                    AVG(danhgia.diemDanhGia) AS DiemDanhGiaTrungBinh, 
+                                    COUNT(DISTINCT danhgia.idDanhGia) AS LuotDanhGia
+                                FROM 
+                                    truyen 
+                                    INNER JOIN truyen_theloai ON truyen.idTruyen = truyen_theloai.idTruyen 
+                                    INNER JOIN theloai ON theloai.idTheLoai = truyen_theloai.idTheLoai 
+                                    LEFT JOIN chuongtruyen ON truyen.idTruyen = chuongtruyen.idTruyen 
+                                    LEFT JOIN tinh_trang ON truyen.idTinhTrang = tinh_trang.idTinhTrang 
+                                    LEFT JOIN danhgia ON truyen.idTruyen = danhgia.idTruyen 
+                                WHERE 
+                                    truyen.idTruyen = $id
+                                GROUP BY 
+                                    truyen.idTruyen, truyen.tenTruyen, theloai.tenTheLoai, tinh_trang.tinhTrang";
     
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo '
-                            <div class="page-content rounded-2">
-                                <div class="row no-gutters">
-                                    <div class="col-12">
-                                        <div class="media">
-                                            <div class="mr-4 text-center">
-                                                <div class="nh-thumb nh-thumb--210 shadow">
-                                                    <img src=".' . $row["hinhAnh"] . '"
-                                                        alt="' . $row["tenTruyen"] . '">
+                                <div class="page-content rounded-2">
+                                    <div class="row no-gutters">
+                                        <div class="col-12">
+                                            <div class="media">
+                                                <div class="mr-4 text-center">
+                                                    <div class="nh-thumb nh-thumb--210 shadow">
+                                                        <img src=".' . $row["hinhAnh"] . '"
+                                                            alt="' . $row["tenTruyen"] . '">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="media-body">
-                                                <div class="d-flex justify-content-start mb-3">
-                                                    <h1 class="h3 mr-2">
-                                                        <a href="javascript:void(0)">
-                                                            ' . $row["tenTruyen"] . '
-                                                        </a>
-                                                    </h1>
-                                                    <a href="javascript:void(0)" v-on:click="reportBook(119832)" data-toggle="modal"
-                                                        class="text-tertiary fz-13 mt-1">
-                                                    </a>
-                                                </div>
-                                                <ul class="list-unstyled mb-4">
-                                                    <li
-                                                        class="d-inline-block border border-secondary px-3 py-1 text-secondary rounded-3 mr-2 mb-2">
-                                                        <a href="https://metruyencv.com/tac-gia/382" class="text-secondary">
-                                                        ' . $row["tacGia"] . '
-                                                        </a>
-                                                    </li>
-                                                    <li class="d-inline-block border border-danger px-3 py-1 text-danger rounded-3 mr-2 mb-2"> 
-                                                        ' . $row["tinhTrang"] . '
-                                                    </li>
-                                                    <li
-                                                        class="d-inline-block border border-primary px-3 py-1 text-primary rounded-3 mr-2 mb-2">
-                                                        <a href="https://metruyencv.com/truyen?genre=3" class="text-primary">
-                                                        ' . $row["tenTheLoai"] . '
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <ul class="list-unstyled d-flex mb-4">
-                                                    <li class="mr-5">
-                                                        <div class="font-weight-semibold h4 mb-1">' . $row["SoChuong"] . '</div>
-                                                        <div class>Chương</div>
-                                                    </li>
-                                                    <li class="mr-5">
-                                                        <div class="font-weight-semibold h4 mb-1">' . $row["soLuotXem"] . '</div>
-                                                        <div class>Lượt đọc</div>
-                                                    </li>
-                                                </ul>
-                                                <div class="d-flex align-items-center mb-4">
-                                                    <span class="nh-rating">
-                                                        <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
-                                                        </i>
-                                                        <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
-                                                        </i>
-                                                        <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
-                                                        </i>
-                                                        <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
-                                                        </i>
-                                                        <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
-                                                        </i>
-                                                        <span class="active" style="width: 100%">
-                                                            <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
-                                                            </i>
-                                                            <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
-                                                            </i>
-                                                            <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
-                                                            </i>
-                                                            <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
-                                                            </i>
-                                                            <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
-                                                            </i>
-                                                        </span>
-                                                    </span>
-                                                    <span class="d-inline-block ml-2">
-                                                        <span class="font-weight-semibold">'.$row["DiemDanhGiaTrungBinh"].'</span>/5
-                                                    </span>
-                                                    <span class="d-inline-block text-secondary ml-1">('.$row["LuotDanhGia"].' đánh giá)</span>
-                                                </div>
-                                                <ul class="list-unstyled d-flex align-items-center">
-                                                    <li class="mr-3 w-150" id="reading-book">
-                                                        <a style="color: #fff"
-                                                            class="cursor-pointer btn btn-primary btn-md btn-block btn-shadow font-weight-semibold d-flex align-items-center justify-content-center"
-                                                            v-if="!isUserReadBookBefore"
-                                                            href="https://metruyencv.com/truyen/cay-tai-tan-the-them-diem-thang-cap/chuong-1">
-                                                            <i class="fa-solid fa-glasses fa-sm mr-2">
-            
-                                                            </i>
-                                                            Đọc truyện
-                                                        </a>
-                                                    </li>
-                                                    <li id="bookmark" class="mr-3 w-150">
-                                                        <span data-v-20fe2610="">
-                                                            <a data-v-20fe2610="" href="javascript:void(0);"
-                                                                class="btn btn-outline-secondary btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">
-                                                                <i class="fa-regular fa-bookmark fa-sm mr-2">
-            
-                                                                </i>
-                                                                Đánh dấu
+                                                <div class="media-body">
+                                                    <div class="d-flex justify-content-start mb-3">
+                                                        <h1 class="h3 mr-2">
+                                                            <a href="javascript:void(0)">
+                                                                ' . $row["tenTruyen"] . '
                                                             </a>
+                                                        </h1>
+                                                        <a href="javascript:void(0)" v-on:click="reportBook(119832)" data-toggle="modal"
+                                                            class="text-tertiary fz-13 mt-1">
+                                                        </a>
+                                                    </div>
+                                                    <ul class="list-unstyled mb-4">
+                                                        <li
+                                                            class="d-inline-block border border-secondary px-3 py-1 text-secondary rounded-3 mr-2 mb-2">
+                                                            <a href="https://metruyencv.com/tac-gia/382" class="text-secondary">
+                                                            ' . $row["tacGia"] . '
+                                                            </a>
+                                                        </li>
+                                                        <li class="d-inline-block border border-danger px-3 py-1 text-danger rounded-3 mr-2 mb-2"> 
+                                                            ' . $row["tinhTrang"] . '
+                                                        </li>
+                                                        <li
+                                                            class="d-inline-block border border-primary px-3 py-1 text-primary rounded-3 mr-2 mb-2">
+                                                            <a href="https://metruyencv.com/truyen?genre=3" class="text-primary">
+                                                            ' . $row["tenTheLoai"] . '
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="list-unstyled d-flex mb-4">
+                                                        <li class="mr-5">
+                                                            <div class="font-weight-semibold h4 mb-1">' . $row["SoChuong"] . '</div>
+                                                            <div class>Chương</div>
+                                                        </li>
+                                                        <li class="mr-5">
+                                                            <div class="font-weight-semibold h4 mb-1">' . $row["soLuotXem"] . '</div>
+                                                            <div class>Lượt đọc</div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="d-flex align-items-center mb-4">
+                                                        <span class="nh-rating">
+                                                            <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
+                                                            </i>
+                                                            <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
+                                                            </i>
+                                                            <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
+                                                            </i>
+                                                            <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
+                                                            </i>
+                                                            <i class="nh-icon fa-solid fa-star" style="color: rgb(255, 235, 175);">
+                                                            </i>
+                                                            <span class="active" style="width: 100%">
+                                                                <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                </i>
+                                                                <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                </i>
+                                                                <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                </i>
+                                                                <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                </i>
+                                                                <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                </i>
+                                                            </span>
                                                         </span>
-                                                    </li>
-                                                </ul>
+                                                        <span class="d-inline-block ml-2">
+                                                            <span class="font-weight-semibold">' . $row["DiemDanhGiaTrungBinh"] . '</span>/5
+                                                        </span>
+                                                        <span class="d-inline-block text-secondary ml-1">(' . $row["LuotDanhGia"] . ' đánh giá)</span>
+                                                    </div>
+                                                    <ul class="list-unstyled d-flex align-items-center">
+                                                        <li class="mr-3 w-150" id="reading-book">
+                                                            <a style="color: #fff"
+                                                                class="cursor-pointer btn btn-primary btn-md btn-block btn-shadow font-weight-semibold d-flex align-items-center justify-content-center"
+                                                                v-if="!isUserReadBookBefore"
+                                                                href="http://localhost/truyen/co-chan-nhan/chuong-1.php">
+                                                                <i class="fa-solid fa-glasses fa-sm mr-2">
+                                                                </i>
+                                                                Đọc truyện
+                                                            </a>
+                                                        </li>
+                                                        <li id="bookmark" class="mr-3 w-150">
+                                                            <span data-v-20fe2610="">
+                                                                <a data-v-20fe2610="" href="javascript:void(0);"
+                                                                    class="btn btn-outline-secondary btn-md btn-block font-weight-semibold d-flex align-items-center justify-content-center">
+                                                                    <i class="fa-regular fa-bookmark fa-sm mr-2">
+                
+                                                                    </i>
+                                                                    Đánh dấu
+                                                                </a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            ';
+                                ';
                         }
                     } else {
                         echo "Không có dữ liệu";
@@ -202,20 +205,20 @@
                             $rowChuong = $resultChuong->fetch_assoc();
                             $tongChuong = $rowChuong["TongChuong"];
                             echo '
-                                    <div class="nav nav-tabs nh-nav-tabs mb-4" id="js-nh-tab" role="tablist">
-                                        <a class="nav-item nav-link px-0 py-3 mr-4 active" id="nav-tab-intro"
-                                            href="javascript:void(0)">Giới thiệu
-                                        </a>
-                                        <a class="nav-item nav-link px-0 py-3 mr-4" id="nav-tab-review" href="javascript:void(0)">
-                                            <span class="h4 m-0">Đánh giá</span>
-                                            <span class="counter rounded-3 px-2 py-1 ml-1">' . $tongDanhGia . '</span>
-                                        </a>
-                                        <a class="nav-item nav-link px-0 py-3 mr-4" id="nav-tab-chap" href="javascript:void(0)">
-                                            <span class="h4 m-0">D.s chương</span>
-                                            <span class="counter rounded-3 px-2 py-1 ml-1">' . $tongChuong . '</span>
-                                        </a>
-                                    </div>
-                                    ';
+                                        <div class="nav nav-tabs nh-nav-tabs mb-4" id="js-nh-tab" role="tablist">
+                                            <a class="nav-item nav-link px-0 py-3 mr-4 active" id="nav-tab-intro"
+                                                href="javascript:void(0)">Giới thiệu
+                                            </a>
+                                            <a class="nav-item nav-link px-0 py-3 mr-4" id="nav-tab-review" href="javascript:void(0)">
+                                                <span class="h4 m-0">Đánh giá</span>
+                                                <span class="counter rounded-3 px-2 py-1 ml-1">' . $tongDanhGia . '</span>
+                                            </a>
+                                            <a class="nav-item nav-link px-0 py-3 mr-4" id="nav-tab-chap" href="javascript:void(0)">
+                                                <span class="h4 m-0">D.s chương</span>
+                                                <span class="counter rounded-3 px-2 py-1 ml-1">' . $tongChuong . '</span>
+                                            </a>
+                                        </div>
+                                        ';
                         } else {
                             echo "Không có dữ liệu";
                         }
@@ -242,30 +245,30 @@
                                                     die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
                                                 }
                                                 $sql = "SELECT 
-                                                            truyen.tomTat,
-                                                            truyen.tacGia,
-                                                            COUNT(danhgia.idDanhGia) AS SoLuotDanhGia,
-                                                            COUNT(chuongtruyen.idChuong) AS SoLuongChuong,
-                                                            chuongtruyen.tieuDe AS TieuDeChuong
-                                                        FROM 
-                                                            truyen
-                                                        LEFT JOIN 
-                                                            danhgia ON truyen.idTruyen = danhgia.idTruyen
-                                                        LEFT JOIN 
-                                                            chuongtruyen ON truyen.idTruyen = chuongtruyen.idTruyen
-                                                        WHERE 
-                                                            truyen.idTruyen = $id
-                                                        GROUP BY 
-                                                            truyen.idTruyen";
+                                                                truyen.tomTat,
+                                                                truyen.tacGia,
+                                                                COUNT(danhgia.idDanhGia) AS SoLuotDanhGia,
+                                                                COUNT(chuongtruyen.idChuong) AS SoLuongChuong,
+                                                                chuongtruyen.tieuDe AS TieuDeChuong
+                                                            FROM 
+                                                                truyen
+                                                            LEFT JOIN 
+                                                                danhgia ON truyen.idTruyen = danhgia.idTruyen
+                                                            LEFT JOIN 
+                                                                chuongtruyen ON truyen.idTruyen = chuongtruyen.idTruyen
+                                                            WHERE 
+                                                                truyen.idTruyen = $id
+                                                            GROUP BY 
+                                                                truyen.idTruyen";
     
                                                 $result = $conn->query($sql);
                                                 if ($result->num_rows > 0) {
                                                     while ($row = $result->fetch_assoc()) {
                                                         echo '
-                                                        <p>
-                                                            ' . replaceDotWithBreak($row["tomTat"]) . '
-                                                        </p>
-                                                        ';
+                                                            <p>
+                                                                ' . replaceDotWithBreak($row["tomTat"]) . '
+                                                            </p>
+                                                            ';
                                                     }
                                                 } else {
                                                     echo "Không có dữ liệu";
@@ -288,31 +291,39 @@
                                         if ($conn->connect_error) {
                                             die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
                                         }
-                                        $sql = "SELECT * FROM chuongtruyen 
+                                        $sql = "SELECT *, (
+                                                    SELECT COUNT(*) 
+                                                    FROM chuongtruyen 
+                                                    WHERE idTruyen = $id
+                                                ) AS tongSoChuong
+                                                FROM chuongtruyen 
                                                 WHERE idTruyen = $id 
                                                 ORDER BY ngayThem DESC 
-                                                LIMIT 3";
+                                                LIMIT 3
+                                                ";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             echo '<table class="table border-bottom mb-4 mt-5">';
+                                            $value = 0;
                                             while ($row = $result->fetch_assoc()) {
                                                 echo '
-                                                <tr>
-                                                    <td>
-                                                        <ul class="list-unstyled m-0">
-                                                            <li class="media">
-                                                                <div class="media-body">
-                                                                    <a
-                                                                        href="https://metruyencv.com/truyen/cay-tai-tan-the-them-diem-thang-cap/chuong-322">
-                                                                        ' . $row["tieuDe"] . '
-                                                                    </a>
-                                                                </div>
-                                                                <div class="pl-3">' . compareTime($row["ngayThem"]) . '</div>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-                                                </tr>
-                                                ';
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="list-unstyled m-0">
+                                                                <li class="media">
+                                                                    <div class="media-body">
+                                                                        <a
+                                                                            href="./chuong-'.$row["tongSoChuong"]-$value.'.php ">
+                                                                            ' . $row["tieuDe"] . '
+                                                                        </a>
+                                                                    </div>
+                                                                    <div class="pl-3">' . compareTime($row["ngayThem"]) . '</div>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    ';
+                                                    $value++;
                                             }
                                             echo '</table>';
                                         } else {
@@ -336,29 +347,29 @@
                                                 </a>
                                             </div>
                                             <!-- <ul data-v-3807dc18="" class="list-unstyled m-0">
-                                                <li data-v-3807dc18="" class="media align-items-center py-2 mb-1"><a
-                                                        data-v-3807dc18=""
-                                                        href="dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca"
-                                                        class="nh-thumb nh-thumb--32 shadow mr-3"><img data-v-3807dc18=""
-                                                            alt="Điên Rồi! Ta Là Giáo Hoa Mụ Mụ Bảng Nhất Đại Ca?"
-                                                            width="32"
-                                                            data-src="https://static.cdnno.com/poster/dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca/150.jpg?1700902021"
-                                                            src="https://static.cdnno.com/poster/dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca/150.jpg?1700902021"
-                                                            lazy="loaded"></a>
-                                                    <div data-v-3807dc18="" class="media-body">
-                                                        <h2 data-v-3807dc18="" class="fz-body mb-1"><a data-v-3807dc18=""
-                                                                href="dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca">
-                                                                Điên Rồi! Ta Là Giáo Hoa Mụ Mụ Bảng Nhất Đại Ca?
-                                                            </a></h2>
-                                                        <div data-v-3807dc18=""
-                                                            class="text-secondary d-flex align-items-center small"><i
-                                                                data-v-3807dc18=""
-                                                                class="nh-icon fa-solid fa-book mr-2"></i>
-                                                            Đô Thị
+                                                    <li data-v-3807dc18="" class="media align-items-center py-2 mb-1"><a
+                                                            data-v-3807dc18=""
+                                                            href="dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca"
+                                                            class="nh-thumb nh-thumb--32 shadow mr-3"><img data-v-3807dc18=""
+                                                                alt="Điên Rồi! Ta Là Giáo Hoa Mụ Mụ Bảng Nhất Đại Ca?"
+                                                                width="32"
+                                                                data-src="https://static.cdnno.com/poster/dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca/150.jpg?1700902021"
+                                                                src="https://static.cdnno.com/poster/dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca/150.jpg?1700902021"
+                                                                lazy="loaded"></a>
+                                                        <div data-v-3807dc18="" class="media-body">
+                                                            <h2 data-v-3807dc18="" class="fz-body mb-1"><a data-v-3807dc18=""
+                                                                    href="dien-roi-ta-la-giao-hoa-mu-mu-bang-nhat-dai-ca">
+                                                                    Điên Rồi! Ta Là Giáo Hoa Mụ Mụ Bảng Nhất Đại Ca?
+                                                                </a></h2>
+                                                            <div data-v-3807dc18=""
+                                                                class="text-secondary d-flex align-items-center small"><i
+                                                                    data-v-3807dc18=""
+                                                                    class="nh-icon fa-solid fa-book mr-2"></i>
+                                                                Đô Thị
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            </ul> -->
+                                                    </li>
+                                                </ul> -->
                                         </section>
                                     </div>
                                 </div>
@@ -409,49 +420,49 @@
                                                 die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
                                             }
                                             $sql = "SELECT AVG(diemDanhGia) AS DiemTrungBinh, COUNT(*) AS TongDanhGia 
-                                                    FROM danhgia 
-                                                    WHERE idTruyen = $id";
+                                                        FROM danhgia 
+                                                        WHERE idTruyen = $id";
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 echo '<table class="table border-bottom mb-4 mt-5">';
                                                 while ($row = $result->fetch_assoc()) {
                                                     echo '
-                                                    <div class="d-flex align-items-center py-2">
-                                                        <div class="h5 m-0">Đã có ' . $row["TongDanhGia"] . ' đánh giá</div>
-                                                        <div class="d-flex align-items-center ml-auto">
-                                                            <span class="nh-rating">
-                                                                <i class="nh-icon fa-solid fa-star"
-                                                                    style="color: rgb(255, 235, 175);">
-                                                                </i>
-                                                                <i class="nh-icon fa-solid fa-star"
-                                                                    style="color: rgb(255, 235, 175);">
-                                                                </i>
-                                                                <i class="nh-icon fa-solid fa-star"
-                                                                    style="color: rgb(255, 235, 175);">
-                                                                </i>
-                                                                <i class="nh-icon fa-solid fa-star"
-                                                                    style="color: rgb(255, 235, 175);">
-                                                                </i>
-                                                                <i class="nh-icon fa-solid fa-star"
-                                                                    style="color: rgb(255, 235, 175);">
-                                                                </i>
-                                                                <span class="active" style="width: 100%;">
-                                                                    <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                        <div class="d-flex align-items-center py-2">
+                                                            <div class="h5 m-0">Đã có ' . $row["TongDanhGia"] . ' đánh giá</div>
+                                                            <div class="d-flex align-items-center ml-auto">
+                                                                <span class="nh-rating">
+                                                                    <i class="nh-icon fa-solid fa-star"
+                                                                        style="color: rgb(255, 235, 175);">
                                                                     </i>
-                                                                    <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                    <i class="nh-icon fa-solid fa-star"
+                                                                        style="color: rgb(255, 235, 175);">
                                                                     </i>
-                                                                    <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                    <i class="nh-icon fa-solid fa-star"
+                                                                        style="color: rgb(255, 235, 175);">
                                                                     </i>
-                                                                    <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                    <i class="nh-icon fa-solid fa-star"
+                                                                        style="color: rgb(255, 235, 175);">
                                                                     </i>
-                                                                    <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                    <i class="nh-icon fa-solid fa-star"
+                                                                        style="color: rgb(255, 235, 175);">
                                                                     </i>
+                                                                    <span class="active" style="width: 100%;">
+                                                                        <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                        </i>
+                                                                        <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                        </i>
+                                                                        <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                        </i>
+                                                                        <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                        </i>
+                                                                        <i class="nh-icon fa-solid fa-star" style="color: #ffd505;">
+                                                                        </i>
+                                                                    </span>
                                                                 </span>
-                                                            </span>
-                                                            <span class="d-inline-block h5 mb-0 ml-3">' . $row["DiemTrungBinh"] . '</span>
+                                                                <span class="d-inline-block h5 mb-0 ml-3">' . $row["DiemTrungBinh"] . '</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    ';
+                                                        ';
                                                 }
                                                 echo '</table>';
                                             } else {
@@ -479,48 +490,56 @@
                                         </div>
                                         <div data-v-abaf3886="" class="nh-section mb-4">
                                             <?php
-                                                $servername = "localhost"; // Địa chỉ server MySQL
-                                                $username = "root"; // Tên đăng nhập MySQL
-                                                $password = ""; // Mật khẩu MySQL
-                                                $dbname = "web_truyen"; // Tên cơ sở dữ liệu MySQL
-                                                
-                                                // Tạo kết nối đến cơ sở dữ liệu
-                                                $conn = new mysqli($servername, $username, $password, $dbname);
-        
-                                                // Kiểm tra kết nối
-                                                if ($conn->connect_error) {
-                                                    die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
-                                                }
+                                            $servername = "localhost"; // Địa chỉ server MySQL
+                                            $username = "root"; // Tên đăng nhập MySQL
+                                            $password = ""; // Mật khẩu MySQL
+                                            $dbname = "web_truyen"; // Tên cơ sở dữ liệu MySQL
+                                            
+                                            // Tạo kết nối đến cơ sở dữ liệu
+                                            $conn = new mysqli($servername, $username, $password, $dbname);
     
-                                                $sql = "SELECT * FROM chuongtruyen WHERE idTruyen = $id ORDER BY ngayThem DESC";
-                                                $result = $conn->query($sql);
-                                                if ($result->num_rows > 0) {
-                                                    echo'<div data-v-abaf3886="" class="row mt-2">';
-                                                    while ($row = $result->fetch_assoc()) {
-                                                       echo'
-                                                        <div data-v-abaf3886="" class="col-4 border-bottom-dashed">
-                                                            <a data-v-abaf3886=""
-                                                                href="phan-phai-bat-dau-dao-khoet-nu-chinh-linh-dong/chuong-1"
-                                                                class="media py-2 mb-1">
-                                                                <div data-v-abaf3886=""
-                                                                    href="phan-phai-bat-dau-dao-khoet-nu-chinh-linh-dong/chuong-1"
-                                                                    class="media-body">
-                                                                    <div data-v-abaf3886="" class="text-overflow-1-lines">
-                                                                        '.$row["tieuDe"].'
-                                                                        <small data-v-abaf3886="" class="text-muted">
-                                                                        ('.compareTime($row["ngayThem"]).')</small>
+                                            // Kiểm tra kết nối
+                                            if ($conn->connect_error) {
+                                                die("Kết nối đến cơ sở dữ liệu thất bại: " . $conn->connect_error);
+                                            }
+    
+                                            $sql = "SELECT chuongtruyen.*, truyen.tenTruyen
+                                                        FROM chuongtruyen
+                                                        JOIN truyen ON chuongtruyen.idTruyen = truyen.idTruyen
+                                                        WHERE chuongtruyen.idTruyen = $id
+                                                        ORDER BY chuongtruyen.ngayThem ASC
+                                                        ";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                echo '<div data-v-abaf3886="" class="row mt-2">';
+                                                $value = 1;
+                                                while ($row = $result->fetch_assoc()) {
+                                                    echo '
+                                                            <div data-v-abaf3886="" class="col-4 border-bottom-dashed">
+                                                                <a data-v-abaf3886=""
+                                                                    href="./chuong-'.$value.'.php "
+                                                                    class="media py-2 mb-1">
+                                                                    <div data-v-abaf3886=""
+                                                                        href="./chuong-'.$value.'.php"
+                                                                        class="media-body">
+                                                                        <div data-v-abaf3886="" class="text-overflow-1-lines">
+                                                                            ' . $row["tieuDe"] . '
+                                                                            <small data-v-abaf3886="" class="text-muted">
+                                                                            (' . compareTime($row["ngayThem"]) . ')</small>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                       ';
-                                                    }
-                                                    echo'</div>';
-                                                } else {
-                                                    echo "Không có dữ liệu";
+                                                                </a>
+                                                            </div>
+                                                           ';
+                                                           createTemporaryHTMLFileMin("/truyen/". convertToSlug($row["tenTruyen"]) ."/chuong-".$value.".php",$row["idChuong"]);
+                                                    $value++;
                                                 }
-                                                $conn->close();
-                                                
+                                                echo '</div>';
+                                            } else {
+                                                echo "Không có dữ liệu";
+                                            }
+                                            $conn->close();
+    
                                             ?>
                                         </div>
                                     </div>
@@ -531,8 +550,8 @@
                 </div>
             </main>
             <div id="footer">
-            <hr class="my-0">
-            <footer class="footer text-center py-4">
+                <hr class="my-0">
+                <footer class="footer text-center py-4">
                     <div class="container">
                         <a href="/" class="d-inline-block py-1 my-2">
                             <img src="../asset/images/logo.png" alt="logo" width="64" height="64">

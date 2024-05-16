@@ -19,7 +19,7 @@
     
     <body>
         <?php
-        $id = 7;
+        $id = 3;
         ?>
         <div id="app">
             <?php
