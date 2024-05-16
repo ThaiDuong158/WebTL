@@ -7,4 +7,8 @@
         <i class="sidebar fa-solid fa-calendar-days"></i>
         <p class="sidebar-hide">Điểm danh</p>
     </a>
+    <a href="../LopHoc/lopHoc.php" class="sidebar-item no-select">
+        <i class="sidebar fa-solid fa-magnifying-glass"></i>
+        <p class="sidebar-hide">Lớp Học</p>
+    </a>
 </div>

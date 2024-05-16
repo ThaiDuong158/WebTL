@@ -1,0 +1,29 @@
+.content {
+    padding-top: 12px;
+
+}
+
+.title {
+    border: 1px solid #666;
+    height: fit-content;
+}
+
+.gocDuoi {
+    display: inline-flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 8px 0;
+}
+
+.gocDuoi p {
+    margin: 0;
+}
+
+.gocDuoi--NameGV {
+    color: rgb(40, 40, 245);
+}
+
+.gocDuoi--NameGV:hover {
+    cursor: pointer;
+    color: blue;
+}
