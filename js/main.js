@@ -8,7 +8,6 @@ const sidebarHides = $$('.sidebar-hide')
 const sidebarWidths = $$('.sidebar-width')
 const sidebarBtn = $('.sidebar-mini')
 const sidebarItems = $$('.sidebar-item')
-const path = window.location.pathname;
 
 let contentDefaultHeight = content.clientHeight
 
@@ -34,10 +33,19 @@ let sidebarHide = () => {
 
 sidebarBtn.addEventListener('click', sidebarHide)
 
-sidebarItems.forEach(sidebarItem => {
-    if (sidebarItem.getAttribute('href') === `..${path}`) {
-        let sidebarLeftLight = $('.sidebar-item.left-line')
-        sidebarLeftLight.classList.remove("left-line")
-        sidebarItem.classList.add("left-line")
-    }
-})
+document.addEventListener('DOMContentLoaded', function() {
+    // Lấy đường dẫn URL hiện tại
+    const currentURL = window.location.pathname;
+
+    // Duyệt qua tất cả các thẻ <a> trong sidebar
+    sidebarItems.forEach(item => {
+        // Lấy href của thẻ <a>
+        const href = new URL(item.href, window.location.origin).pathname;
+
+        // So sánh đường dẫn hiện tại với href của thẻ <a>
+        if (currentURL === href) {
+            // Thêm lớp 'left-line' vào thẻ <a> tương ứng
+            item.classList.add('left-line');
+        }
+    });
+});
