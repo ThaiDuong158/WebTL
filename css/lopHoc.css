@@ -8,3 +8,38 @@
     height: fit-content;
 }
 
+.content-main {
+    padding: 15px;
+    border: 1px solid #666;
+    margin-top: 32px;
+}
+
+.content--list {
+    list-style: none;
+    padding: 0;
+}
+
+.content--item__icon,
+.contect--item__title {
+    color: #009fe5;
+    font-size: 21px;
+}
+
+.content--item__icon {
+    height: 24px;
+    width: 24px;
+}
+
+.content--item__icon:hover,
+.contect--item__title:hover {
+    color: #c02424;
+    cursor: pointer;
+}
+
+.content--list__activity {
+    list-style: none;
+}
+
+.content--item__activity {
+    padding: 5px 0;
+}
