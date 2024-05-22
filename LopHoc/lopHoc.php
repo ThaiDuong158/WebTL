@@ -15,13 +15,9 @@
         <div class="row">
             <?php include '../TrangMau/sidebar.php'; ?>
             <div class="col bg-light d-flex flex-column justify-content-between">
-                <div class="content row container-fluid" style="height: 100px;">
+                <div class="content row container-fluid d-flex flex-column">
                     <div class="title container-fluid">
-                        <h1>232_1TH1507_KS3A_10_ngoaigio</h1>
-                        <div class="gocDuoi">
-                            <p>Giáo viên hướng dẫn:</p>
-                            <p class="gocDuoi--NameGV no-select">Nguyễn Vạn Năng</p>
-                        </div>
+                        <h1>232_1TH1507_KS3A_10_ngoaigio GV: Nguyễn Vạn Năng</h1>
                     </div>
                     <div class="content-main container-fluid">
                         
