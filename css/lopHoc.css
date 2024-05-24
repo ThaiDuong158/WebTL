@@ -1,20 +1,21 @@
 .content {
     padding-top: 12px;
-
 }
 
 .title {
     border: 1px solid #666;
+    border-radius: 2px;
     height: fit-content;
 }
 
 .content-main {
     padding: 15px;
     border: 1px solid #666;
+    border-radius: 2px;
     margin-top: 32px;
 }
 
-.content--list {
+.content--list__l1 {
     list-style: none;
     padding: 0;
 }
@@ -23,6 +24,7 @@
 .contect--item__title {
     color: #009fe5;
     font-size: 21px;
+    width: fit-content;
 }
 
 .content--item__icon {
@@ -36,10 +38,32 @@
     cursor: pointer;
 }
 
-.content--list__activity {
+.content--list__l2 {
     list-style: none;
 }
 
-.content--item__activity {
+.content--item__l2 {
     padding: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.content--item__l2--title {
+    font-size: 21px;
+    margin-bottom: 0;
+    padding-left: 8px;
+    color: #666;
+    text-decoration: none;
+}
+
+.content--item__link {
+    display: flex;
+    align-items: center;
+    outline-color: white;
+    text-decoration: none;
+}
+
+.content--item__link:hover {
+    text-decoration: underline;
+    color: #666;
 }
