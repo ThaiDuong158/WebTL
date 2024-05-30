@@ -2,7 +2,8 @@
     padding-top: 12px;
 }
 
-.title, .content--title{
+.title,
+.content--title {
     color: #c02424;
 }
 
@@ -31,4 +32,37 @@ tr td:nth-child(1) {
 
 .content--row {
     padding: 8px 0;
+}
+
+#drop_zone {
+    margin: 12px 0;
+    padding: 8px;
+    border: 1px #666 dashed;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#file_list {
+    max-height: 120px;
+    /* Đặt chiều cao tối đa */
+    overflow-y: auto;
+    /* Thiết lập cuộn dọc */
+    padding: 0;
+}
+
+#drop_zone_text {
+    text-align: center;
+}
+
+#file_list p {
+    padding: 8px 12px;
+    margin-bottom: 0;
+}
+
+#file_list p:nth-child(2n-1) {
+    background-color: #837f7f;
+    color: #fff;
 }

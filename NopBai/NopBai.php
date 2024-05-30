@@ -25,12 +25,17 @@
                         <div class="container-fluid">
                             <div class="row content--row">
                                 <div class="col-3"></div>
-                                <div class="col d-flex justify-content-end">Kích cỡ tối đa đối với các tập tin mới: 16MB, đính kèm tối đa: 20</div>
+                                <div class="col d-flex justify-content-end"></div>
                             </div>
                             <div class="row content--row">
                                 <div class="col-3"></div>
                                 <div class="col">
-                                    <input type="file" name="" id="">
+                                    <button id="file_input_button" class="btn btn-secondary">Chọn tệp</button>
+                                    <input type="file" id="file_input" style="display: none;" multiple>
+                                    <div id="drop_zone" class="no-select">
+                                        <p id="drop_zone_text" class="container-fluid">Drag one or more files to this <i>drop zone</i>.</p>
+                                        <div id="file_list" class="container-fluid"></div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row content--row">
@@ -53,12 +58,14 @@
         });
         let buttons = document.querySelectorAll('.btn--back');
         buttons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 window.location.href = '../NopBai/TrangThaiNopBai.php';
             });
-        })
+        });
     </script>
+
 </body>
 <script src="../js/main.js"></script>
+<script src="../js/dnd.js"></script>
 
 </html>
