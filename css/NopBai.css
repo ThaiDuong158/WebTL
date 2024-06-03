@@ -66,3 +66,42 @@ tr td:nth-child(1) {
     background-color: #837f7f;
     color: #fff;
 }
+
+.kiemTra,
+.kiemTra-list,
+.kiemTra-list a {
+    border: 1px solid #c6c6c6;
+}
+
+.kiemTra {
+    padding: 8px 16px;
+}
+
+.kiemTra-list {
+    padding: 16px;
+    margin: 0 16px;
+    position: sticky;
+}
+
+.kiemTra-list a {
+    text-decoration: none;
+    padding: 8px;
+    margin: 16px 4px;
+    color: #c6c6c6;
+    font-size: 16px;
+}
+
+.kiemTra-list a:hover {
+    background-color: #c6c6c6;
+    color: #fff;
+}
+
+.cau {
+    margin: 8px 0;
+}
+
+.nopBai {
+    margin: 8px auto;
+    text-align: center;
+    display: flex;
+}
