@@ -4,7 +4,7 @@
 $server = "localhost";
 $username = "root";
 $password = "";
-$dbname = "web";
+$dbname = "ptiot";
 
 // Khởi tạo kết nối PDO
 $pdo = new PDO("mysql:host=$server;dbname=$dbname", $username, $password);
@@ -17,16 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $password = $_POST['pass'];
 
   // Chuẩn bị truy vấn SQL
-  $stmt = $pdo->prepare("SELECT * FROM `account` WHERE `user` = :username");
+  $stmt = $pdo->prepare("SELECT * FROM `dangnhap` WHERE `tenTaiKhoan` = :username AND `matKhau` = :pass");
   $stmt->bindParam(':username', $username);
+  $stmt->bindParam(':pass', $password);
 
   // Thực thi truy vấn
   $stmt->execute();
 
   // Lấy thông tin tài khoản
   $user = $stmt->fetch();
-  $stmt = $pdo->prepare("SELECT * FROM `account` WHERE `user` = :username");
+  $stmt = $pdo->prepare("SELECT * FROM `dangnhap` WHERE `tenTaiKhoan` = :username AND `matKhau` = :pass");
   $stmt->bindParam(':username', $username);
+  $stmt->bindParam(':pass', $password);
 
   // Thực thi truy vấn
   $stmt->execute();
@@ -34,9 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $count = $stmt->fetchColumn();
   try {
     if ($count > 0) {
-      if (password_verify($password, password_hash($user['pass'], PASSWORD_BCRYPT))) {
-
-        header("Location: dangky.php");
+      if (password_verify($password, password_hash($user['matKhau'], PASSWORD_BCRYPT))) {
+        $cookie_name = "user";
+        $cookie_value = "21004277";
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
+        header("Location: ../TrangMau/index.php");
       } else {
         // Xác thực thất bại
         // Hiển thị thông báo lỗi

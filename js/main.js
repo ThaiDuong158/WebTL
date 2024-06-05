@@ -8,6 +8,7 @@ const sidebarHides = $$('.sidebar-hide')
 const sidebarWidths = $$('.sidebar-width')
 const sidebarBtn = $('.sidebar-mini')
 const sidebarItems = $$('.sidebar-item')
+const dropdownList = $('.dropdown-list')
 
 let contentDefaultHeight = content.clientHeight
 
@@ -28,12 +29,13 @@ let sidebarHide = () => {
     });
     sidebarWidths.forEach(sidebarWidth => {
         sidebarWidth.classList.toggle("sidebar-small-width");
+        sidebarWidth.classList.add("sidebar-transition");
     });
 }
 
 sidebarBtn.addEventListener('click', sidebarHide)
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Lấy đường dẫn URL hiện tại
     const currentURL = window.location.pathname;
 
@@ -48,4 +50,5 @@ document.addEventListener('DOMContentLoaded', function() {
             item.classList.add('left-line');
         }
     });
+    dropdownList.style.right = `calc(100% - ${$('.header__login').clientWidth}px)`;
 });

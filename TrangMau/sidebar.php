@@ -1,4 +1,4 @@
-<div class="sidebar sidebar-width col-sm-2">
+<div class="sidebar sidebar-width sidebar-transition col-sm-2">
     <a href="../TrangMau/index.php" class="sidebar-item no-select">
         <i class="sidebar-icon fa-solid fa-house"></i>
         <p class="sidebar-hide">Trang chủ</p>

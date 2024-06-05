@@ -105,11 +105,7 @@
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('.sidebar-mini').click();
-        });
-    </script>
+    <?php include'../TrangMau/hideSidebar.php'?>
 </body>
 <script src="../js/main.js"></script>
 
